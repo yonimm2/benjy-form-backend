@@ -4,11 +4,11 @@ import path from "path";
 import { google } from "googleapis";
 
 const app = express();
+const __dirname = path.resolve();
+
 app.use(cors());
 app.use(express.json());
-
-// Serve /public folder
-app.use(express.static("public"));
+app.use(express.static("public"));  // <--- THIS SERVES form.html
 
 // ===============================
 // GOOGLE SHEETS CONFIG
