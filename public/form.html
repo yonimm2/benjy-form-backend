@@ -1,98 +1,74 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Benjy Form</title>
-
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #ffffff;
-      padding: 40px;
-      max-width: 450px;
-      margin: auto;
-      color: #333;
+      padding: 20px;
     }
-
-    h2 {
-      text-align: center;
-      margin-bottom: 30px;
-      font-weight: 600;
-    }
-
-    label {
-      font-weight: 600;
-      display: block;
-      margin-bottom: 6px;
-    }
-
-    input, select, textarea {
+    input, select {
       width: 100%;
-      padding: 14px;
-      margin-bottom: 18px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
+      padding: 12px;
+      margin: 8px 0;
       font-size: 16px;
     }
-
     button {
       width: 100%;
-      padding: 16px;
-      font-size: 18px;
-      background: #22c55e;
-      border: none;
+      padding: 14px;
+      background: #2e63ff;
       color: white;
-      border-radius: 8px;
+      border: none;
+      font-size: 18px;
       cursor: pointer;
-      transition: 0.2s;
-    }
-
-    button:hover {
-      background: #16a34a;
+      margin-top: 10px;
     }
   </style>
 </head>
 <body>
 
-  <h2>Get Your Free Estimate</h2>
+<h2>Get Your Free Estimate</h2>
 
-  <form id="leadForm">
-    <label>Name</label>
-    <input type="text" name="name" required>
+<form id="leadForm">
+  <input type="text" name="name" placeholder="Your Name" required />
+  <input type="tel" name="phone" placeholder="Phone Number" required />
 
-    <label>Phone Number</label>
-    <input type="text" name="phone" required>
+  <select name="projectType">
+    <option value="">Select Project Type</option>
+    <option>Roofing</option>
+    <option>Bathroom Remodeling</option>
+    <option>ADU / Room Addition</option>
+    <option>Kitchen Remodeling</option>
+    <option>Full Home Renovation</option>
+    <option>Other</option>
+  </select>
 
-    <label>Project Type</label>
-    <select name="project_type" required>
-      <option>Home Remodeling</option>
-      <option>Roofing</option>
-      <option>Bathroom Remodeling</option>
-      <option>ADU / Room Addition</option>
-      <option>Commercial Project</option>
-      <option>Other</option>
-    </select>
+  <button type="submit">Submit</button>
+</form>
 
-    <button type="submit">Submit</button>
-  </form>
+<script>
+document.getElementById("leadForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-  <script>
-    document.getElementById("leadForm").addEventListener("submit", async function(e) {
-      e.preventDefault();
+  const formData = Object.fromEntries(new FormData(e.target));
 
-      const data = Object.fromEntries(new FormData(e.target));
+  const res = await fetch("https://benjy-form-backend.onrender.com/submit", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(formData),
+  });
 
-      await fetch("https://benjy-form-backend.onrender.com/submit", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
-      });
+  const data = await res.json();
 
-      alert("Submitted successfully!");
-      e.target.reset();
-    });
-  </script>
+  if (data.success) {
+    alert("Thanks! We will contact you shortly.");
+    e.target.reset();
+  } else {
+    alert("Something went wrong.");
+  }
+});
+</script>
 
 </body>
 </html>
