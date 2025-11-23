@@ -1,0 +1,17 @@
+{
+  "name": "benjy-form-backend",
+  "version": "1.0.0",
+  "description": "Backend handler for Benjy West Builders form",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "google-auth-library": "^9.0.0",
+    "googleapis": "^133.0.0",
+    "axios": "^1.6.7",
+    "express": "^4.18.2",
+    "cors": "^2.8.5"
+  }
+}
